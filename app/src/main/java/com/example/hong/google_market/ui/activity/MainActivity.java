@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.example.hong.google_market.R;
 import com.example.hong.google_market.ui.fragment.BaseFragment;
@@ -37,6 +38,26 @@ public class MainActivity extends BaseActivity {
         myAdapter = new MyAdapter(getSupportFragmentManager());
         viewpager.setAdapter(myAdapter);
         pagerTab.setViewPager(viewpager);
+        pagerTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                BaseFragment fragment = FragmentFactory
+                        .createFragment(position);
+                // 开始加载数据
+                fragment.loadData();
+                Log.e("zyh",position+"");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     class MyAdapter extends FragmentPagerAdapter {

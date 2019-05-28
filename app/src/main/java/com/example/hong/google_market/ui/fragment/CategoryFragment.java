@@ -10,7 +10,6 @@ import com.example.hong.google_market.ui.view.LoadingPage;
  */
 
 public class CategoryFragment extends BaseFragment {
-    
     @Override
     public View onCreateSuccessView() {
         return null;
