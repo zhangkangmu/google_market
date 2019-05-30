@@ -1,5 +1,6 @@
 package com.example.hong.google_market.ui.fragment;
 
+import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -47,6 +48,19 @@ public class HomeFragment extends BaseFragment {
 
         public HomeAdapter(ArrayList<String> data) {
             super(data);
+        }
+
+        // 此方法在子线程调用
+        @Override
+        public ArrayList<String> onLoadMore() {
+             ArrayList<String> moreData = new ArrayList<String>();
+             for(int i=0;i<20;i++) {
+             moreData.add("测试更多数据:" + i);
+             }
+
+             SystemClock.sleep(2000);
+
+            return moreData;
         }
 
         @Override

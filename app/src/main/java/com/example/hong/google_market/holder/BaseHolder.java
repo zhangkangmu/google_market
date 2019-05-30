@@ -31,4 +31,9 @@ public abstract class BaseHolder<T> {
 
     // 4. 根据数据来刷新界面
     public abstract void refreshView(T data);
+
+    // 获取当前item的数据
+    public T getData() {
+        return data;
+    }
 }
