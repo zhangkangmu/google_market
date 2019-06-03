@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.example.hong.google_market.ui.view.LoadingPage;
 import com.example.hong.google_market.utils.UIUtils;
 
+import java.util.ArrayList;
+
 /**
  * Created by hong on 2019/5/27.
  */
@@ -56,5 +58,22 @@ public abstract class BaseFragment extends Fragment {
         if (mLoadingPage != null) {
             mLoadingPage.loadData();
         }
+    }
+
+    // 对网络返回数据的合法性进行校验
+    public LoadingPage.ResultState check(Object obj) {
+        if (obj != null) {
+            if (obj instanceof ArrayList) {// 判断是否是集合
+                ArrayList list = (ArrayList) obj;
+
+                if (list.isEmpty()) {
+                    return LoadingPage.ResultState.STATE_EMPTY;
+                } else {
+                    return LoadingPage.ResultState.STATE_SUCCESS;
+                }
+            }
+        }
+
+        return LoadingPage.ResultState.STATE_ERROR;
     }
 }

@@ -2,14 +2,12 @@ package com.example.hong.google_market.ui.fragment;
 
 import android.os.SystemClock;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.hong.google_market.R;
+import com.example.hong.google_market.domain.AppInfo;
 import com.example.hong.google_market.holder.BaseHolder;
 import com.example.hong.google_market.holder.HomeHolder;
+import com.example.hong.google_market.http.protocol.HomeProtocol;
 import com.example.hong.google_market.ui.adapter.MyBaseAdapter;
 import com.example.hong.google_market.ui.view.LoadingPage;
 import com.example.hong.google_market.utils.UIUtils;
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 
 public class HomeFragment extends BaseFragment {
 
-    private ArrayList<String> data;
+    private ArrayList<AppInfo> data;
 
     // 如果加载数据成功, 就回调此方法, 在主线程运行
     @Override
@@ -37,35 +35,46 @@ public class HomeFragment extends BaseFragment {
     // 运行在子线程,可以直接执行耗时网络操作,先走onLoad，再走onCreateSuccessView
     @Override
     public LoadingPage.ResultState onLoad() {
-        data = new ArrayList<String>();
-        for (int i = 0; i < 20; i++) {
-            data.add("测试数据:" + i);
-        }
-        return LoadingPage.ResultState.STATE_SUCCESS;
+//        data = new ArrayList<String>();
+//        for (int i = 0; i < 20; i++) {
+//            data.add("测试数据:" + i);
+//        }
+        // }
+        HomeProtocol protocol = new HomeProtocol();
+        data = protocol.getData(0);// 加载第一页数据
+        //check这个方法在基类里
+        return check(data);// 校验数据并返回
     }
 
-    class HomeAdapter extends MyBaseAdapter<String> {
 
-        public HomeAdapter(ArrayList<String> data) {
+    class HomeAdapter extends MyBaseAdapter<AppInfo> {
+
+        private int listSize;
+
+        public HomeAdapter(ArrayList<AppInfo> data) {
             super(data);
         }
 
         // 此方法在子线程调用
         @Override
-        public ArrayList<String> onLoadMore() {
-             ArrayList<String> moreData = new ArrayList<String>();
-             for(int i=0;i<20;i++) {
-             moreData.add("测试更多数据:" + i);
-             }
-
-             SystemClock.sleep(2000);
-
-            return moreData;
+        public ArrayList<AppInfo> onLoadMore() {
+//             ArrayList<String> moreData = new ArrayList<String>();
+//             for(int i=0;i<20;i++) {
+//             moreData.add("测试更多数据:" + i);
+//             }
+//
+//             SystemClock.sleep(2000);
+            HomeProtocol protocol = new HomeProtocol();
+            // 20, 40, 60....
+            // 下一页数据的位置 等于 当前集合大小
+            ArrayList<AppInfo> moreData = protocol.getData(getListSize());
+            return moreData;// 校验数据并返回
         }
 
         @Override
-        public BaseHolder<String> getHolder() {
+        public BaseHolder<AppInfo> getHolder() {
             return new HomeHolder();
         }
+
     }
 }

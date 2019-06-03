@@ -143,4 +143,10 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     public abstract ArrayList<T> onLoadMore();
     // 返回当前页面的holder对象, 必须子类实现
     public abstract BaseHolder<T> getHolder();
+
+
+    //获取当前集合大小
+    public int getListSize() {
+        return data.size();
+    }
 }

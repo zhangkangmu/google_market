@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.hong.google_market.R;
+import com.example.hong.google_market.domain.AppInfo;
 import com.example.hong.google_market.utils.UIUtils;
 
 /**
@@ -11,7 +12,7 @@ import com.example.hong.google_market.utils.UIUtils;
  * Created by hong on 2019/5/30.
  */
 
-public class HomeHolder extends BaseHolder<String> {
+public class HomeHolder extends BaseHolder<AppInfo> {
     private TextView tvContent;
 
     @Override
@@ -22,7 +23,7 @@ public class HomeHolder extends BaseHolder<String> {
     }
 
     @Override
-    public void refreshView(String data) {
-        tvContent.setText(data);
+    public void refreshView(AppInfo data) {
+        tvContent.setText(data.name);
     }
 }
